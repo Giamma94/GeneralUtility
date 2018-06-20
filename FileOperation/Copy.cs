@@ -3,9 +3,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GeneralUtility
+namespace GeneralUtility.FileOperation
 {
-    public static class FileOperation
+    public static class Copy
     {
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace GeneralUtility
         /// <param name="outputFilePath"></param>
         /// <param name="ByteFortransfer"></param>
         /// <param name="DelayForCicle"></param>
-        public static void Copy(string inputFilePath, string outputFilePath, int ByteFortransfer, int DelayForCicle, int DelayOfEvent)
+        public static void StartCopy(string inputFilePath, string outputFilePath, int ByteFortransfer, int DelayForCicle, int DelayOfEvent)
         {
 
             if(taskA != null)

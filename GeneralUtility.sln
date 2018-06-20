@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneralUtility", "GeneralUt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoUtility", "..\DemoUtility\DemoUtility.csproj", "{F6A45ED7-0D71-4E14-A61B-4108C20D5579}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneralUtilityConnectorZ750", "..\GeneralUtilityConnectorZ750\GeneralUtilityConnectorZ750.csproj", "{38CDDBC6-1E21-4770-9F47-77D4C1E560DD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{F6A45ED7-0D71-4E14-A61B-4108C20D5579}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6A45ED7-0D71-4E14-A61B-4108C20D5579}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6A45ED7-0D71-4E14-A61B-4108C20D5579}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38CDDBC6-1E21-4770-9F47-77D4C1E560DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38CDDBC6-1E21-4770-9F47-77D4C1E560DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38CDDBC6-1E21-4770-9F47-77D4C1E560DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38CDDBC6-1E21-4770-9F47-77D4C1E560DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

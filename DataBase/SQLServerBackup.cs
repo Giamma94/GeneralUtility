@@ -4,7 +4,7 @@ using GeneralUtility.LogUtility;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
 
-namespace GeneralUtility
+namespace GeneralUtility.DataBase
 {
 
     public static class SqlServerBackup
