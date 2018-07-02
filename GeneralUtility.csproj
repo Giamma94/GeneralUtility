@@ -83,8 +83,10 @@
       <DependentUpon>LogViewer_UC.xaml</DependentUpon>
     </Compile>
     <Compile Include="NumberUtility\Verify.cs" />
+    <Compile Include="PathUtility\Information.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataBase\SQLServerBackup.cs" />
+    <Compile Include="XmlUtility\XmlController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using GeneralUtility.LogUtility;
 using Microsoft.SqlServer.Management.Smo;
@@ -61,24 +62,13 @@ namespace GeneralUtility.DataBase
         /// <param name="instaceName">Name of the instace.</param>
         private async static void BackupTask(string dbName, string fileName, string destPath, string instaceName)
         {
+
             Log.NewLog(LogType.Info, "Start SQL Backup Task");
             Backup sqlBackup = new Backup();
 
             try
             {
-
-                ////Specify the type of backup, the description, the name, and the database to be backed up.    
-                sqlBackup.Action = BackupActionType.Database;
-                sqlBackup.BackupSetDescription = "BackUp of:" + dbName + "on" + DateTime.Now.ToShortDateString();
-                sqlBackup.BackupSetName = "FullBackUp";
-                sqlBackup.Database = dbName;
-
-                ////Declare a BackupDeviceItem    
-                string destinationPath = destPath;
-                string backupfileName = fileName + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + " " + DateTime.Now.Hour + DateTime.Now.Minute + ".bak";
-                BackupDeviceItem deviceItem = new BackupDeviceItem(destinationPath + "\\" + backupfileName, DeviceType.File);
-                ////Define Server connection    
-
+                ////Define Server connection  
                 //ServerConnection connection = new ServerConnection(frm.serverName, frm.userName, frm.password);    
                 ServerConnection connection = new ServerConnection(instaceName);
 
@@ -91,31 +81,59 @@ namespace GeneralUtility.DataBase
                 sqlBackup.Checksum = true;
                 sqlBackup.ContinueAfterError = true;
 
-                ////Add the device to the Backup object.    
-                sqlBackup.Devices.Add(deviceItem);
-                ////Set the Incremental property to False to specify that this is a full database backup.    
-                sqlBackup.Incremental = false;
+                if (db.Size < PathUtility.Information.GetFreeSpace(Path.GetPathRoot(destPath)))
+                {
 
-                //sqlBackup.ExpirationDate = DateTime.Now.AddDays(3);
+                    ////Specify the type of backup, the description, the name, and the database to be backed up.    
+                    sqlBackup.Action = BackupActionType.Database;
+                    sqlBackup.BackupSetDescription = "BackUp of:" + dbName + "on" + DateTime.Now.ToShortDateString();
+                    sqlBackup.BackupSetName = "FullBackUp";
+                    sqlBackup.Database = dbName;
 
-                ////Specify that the log must be truncated after the backup is complete.    
-                sqlBackup.LogTruncation = BackupTruncateLogType.Truncate;
+                    ////Declare a BackupDeviceItem    
+                    string destinationPath = destPath;
+                    string backupfileName = fileName + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + " " + DateTime.Now.Hour + DateTime.Now.Minute + ".bak";
+                    BackupDeviceItem deviceItem = new BackupDeviceItem(destinationPath + "\\" + backupfileName, DeviceType.File);
 
-                sqlBackup.FormatMedia = false;
 
-                ////Subsribe Event
-                sqlBackup.PercentComplete += SqlBackupOnPercentComplete;
-                sqlBackup.Information += SqlBackupOnInformation;
-                sqlBackup.Complete += SqlBackupOnComplete;
+                    ////Add the device to the Backup object.    
+                    sqlBackup.Devices.Add(deviceItem);
+                    ////Set the Incremental property to False to specify that this is a full database backup.    
+                    sqlBackup.Incremental = false;
 
-                ////Run SqlBackup to perform the full database backup on the instance of SQL Server.
-                Log.NewLog(LogType.Info, "Start SQL Backup Procedure");
-                sqlBackup.SqlBackup(sqlServer);
+                    //sqlBackup.ExpirationDate = DateTime.Now.AddDays(3);
 
-                ////Remove the backup device from the Backup object.    
-                sqlBackup.Devices.Remove(deviceItem);
+                    ////Specify that the log must be truncated after the backup is complete.    
+                    sqlBackup.LogTruncation = BackupTruncateLogType.Truncate;
 
-                Log.NewLog(LogType.Info, "Finish SQL Backup Task");
+                    sqlBackup.FormatMedia = false;
+
+                    ////Subsribe Event
+                    sqlBackup.PercentComplete += SqlBackupOnPercentComplete;
+                    sqlBackup.Information += SqlBackupOnInformation;
+                    sqlBackup.Complete += SqlBackupOnComplete;
+
+                    ////Run SqlBackup to perform the full database backup on the instance of SQL Server.
+                    Log.NewLog(LogType.Info, "Start SQL Backup Procedure");
+                    sqlBackup.SqlBackup(sqlServer);
+
+                    ////Remove the backup device from the Backup object.    
+                    sqlBackup.Devices.Remove(deviceItem);
+
+                    Log.NewLog(LogType.Info, "Finish SQL Backup Task");
+
+                }
+                else
+                {
+
+                    string Message = "No free space aviable";
+
+                    Log.NewLog(LogType.Error, Message);
+                    BackupError?.Invoke(null, Message);
+
+                }
+
+                
 
             }
             catch (Exception ex)
