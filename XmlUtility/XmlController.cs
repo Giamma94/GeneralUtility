@@ -4,6 +4,9 @@ using System.Xml.Serialization;
 
 namespace GeneralUtility.XmlUtility
 {
+    /// <summary>
+    /// Serialize & Deserialize XML
+    /// </summary>
     public static class XmlController
     {
 

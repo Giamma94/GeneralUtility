@@ -117,10 +117,15 @@ namespace GeneralUtility.LogUtility
         /// <param name="message">The message.</param>
         public static void NewLog(LogType lgType, string message)
         {
+            if (LogTaskRun)
+            {
 
-            LogDTO appLog = new LogDTO { LogTime = DateTime.Now, TypeOfLog = lgType, Message = message };
+                LogDTO appLog = new LogDTO { LogTime = DateTime.Now, TypeOfLog = lgType, Message = message };
 
-            LogStack.Add(appLog);
+                LogStack.Add(appLog);
+
+            }
+            
 
         }
 
@@ -132,10 +137,14 @@ namespace GeneralUtility.LogUtility
         /// <param name="message">The message.</param>
         public static void NewLog(DateTime dt ,LogType lgType, string message)
         {
+            if (LogTaskRun)
+            {
 
-            LogDTO appLog = new LogDTO { LogTime = dt, TypeOfLog = lgType, Message = message };
+                LogDTO appLog = new LogDTO { LogTime = dt, TypeOfLog = lgType, Message = message };
 
-            LogStack.Add(appLog);
+                LogStack.Add(appLog);
+
+            }
 
         }
 

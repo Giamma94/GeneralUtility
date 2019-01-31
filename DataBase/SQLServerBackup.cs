@@ -54,7 +54,7 @@ namespace GeneralUtility.DataBase
 
 
         /// <summary>
-        /// Backups the task.
+        /// Backup task.
         /// </summary>
         /// <param name="dbName">Name of the database.</param>
         /// <param name="fileName">Name of the file.</param>
